@@ -28,19 +28,18 @@ def getDF(path):
     i += 1
   return pd.DataFrame.from_dict(df, orient='index')
 
-df = getDF('reviews_mi.json.gz')
+df = getDF('reviews_Baby.json.gz')
 reviewText = df['reviewText'].tolist()
 helpfulData = df['helpful'].tolist()
 helpfulRating = []
 for item in helpfulData:
-	if item[0] == 0:
-		helpfulRating.append(float(item[0]))
-	else:
-		helpfulRating.append(float(item[0])/float(item[1]))
+
+    #smoothed the counts. for every review, added 1 count for helpful and 1 for unhelpful. gives a 3% improvement.
+    helpfulRating.append((float(item[0] +1) )/(float(item[1] + 2) ))
 
 helpfulOrNot = []
 for item in helpfulRating:
-	if item == 0.0:
+	if item <= 0.5:
 		helpfulOrNot.append(-1)
 	else:
 		helpfulOrNot.append(1)
