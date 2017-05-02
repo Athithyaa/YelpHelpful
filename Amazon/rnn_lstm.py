@@ -10,6 +10,7 @@ from keras.preprocessing.text import Tokenizer
 from sklearn.model_selection import train_test_split
 
 numpy.random.seed(7)
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 with open('../reviews_data.csv', 'rb+') as inp_file:
     review_reader = csv.reader(inp_file, delimiter=',')
